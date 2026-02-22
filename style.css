@@ -457,9 +457,6 @@ button:active {
   color: var(--white);
 }
 
-#incompleteBookList~*,
-section:has(#incompleteBookList) {}
-
 .empty-state {
   text-align: center;
   padding: 3rem 1rem;
