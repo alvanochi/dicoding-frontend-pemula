@@ -1,101 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bookshelf App</title>
+<html lang="id">
 
-    <!-- Impor script kamu di sini -->
-    <!-- Lampirkan `defer` jika pemanggilan dilakukan dalam <head> -->
-    <script defer src="main.js"></script>
-  </head>
-  <body>
-    <header>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Bookshelf App - Kelola dan simpan koleksi buku Anda dengan mudah. Atur buku yang sudah dan belum selesai dibaca." />
+  <title>Bookshelf App</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <script defer src="main.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="header-inner">
+      <span class="header-icon">📚</span>
       <h1>Bookshelf App</h1>
-    </header>
+    </div>
+  </header>
 
-    <main>
-      <section>
-        <h2>Tambah Buku Baru</h2>
-        <form id="bookForm" data-testid="bookForm">
-          <div>
-            <label for="bookFormTitle">Judul</label>
-            <input id="bookFormTitle" type="text" required data-testid="bookFormTitleInput" />
+  <main>
+    <section>
+      <h2><span class="section-icon">➕</span> Tambah Buku Baru</h2>
+      <form id="bookForm" data-testid="bookForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="bookFormTitle">Judul Buku</label>
+            <input id="bookFormTitle" type="text" placeholder="Masukkan judul buku..." required
+              data-testid="bookFormTitleInput" />
           </div>
-          <div>
+          <div class="form-group">
             <label for="bookFormAuthor">Penulis</label>
-            <input id="bookFormAuthor" type="text" required data-testid="bookFormAuthorInput" />
+            <input id="bookFormAuthor" type="text" placeholder="Nama penulis..." required
+              data-testid="bookFormAuthorInput" />
           </div>
-          <div>
-            <label for="bookFormYear">Tahun</label>
-            <input id="bookFormYear" type="number" required data-testid="bookFormYearInput" />
-          </div>
-          <div>
-            <label for="bookFormIsComplete">Selesai dibaca</label>
-            <input
-              id="bookFormIsComplete"
-              type="checkbox"
-              data-testid="bookFormIsCompleteCheckbox"
-            />
-          </div>
-          <button id="bookFormSubmit" type="submit" data-testid="bookFormSubmitButton">
-            Masukkan Buku ke rak <span>Belum selesai dibaca</span>
-          </button>
-        </form>
-      </section>
+        </div>
+        <div class="form-group">
+          <label for="bookFormYear">Tahun Terbit</label>
+          <input id="bookFormYear" type="number" placeholder="Contoh: 2024" min="1000" max="9999" required
+            data-testid="bookFormYearInput" />
+        </div>
+        <div class="form-group">
+          <label for="bookFormIsComplete">Status Buku</label>
+          <label class="checkbox-wrapper" for="bookFormIsComplete">
+            <input id="bookFormIsComplete" type="checkbox" data-testid="bookFormIsCompleteCheckbox" />
+            <span class="checkbox-label-text">Selesai dibaca</span>
+          </label>
+        </div>
+        <button id="bookFormSubmit" type="submit" data-testid="bookFormSubmitButton">
+          Masukkan Buku ke rak <span>Belum selesai dibaca</span>
+        </button>
+      </form>
+    </section>
 
-      <section>
-        <h2>Cari Buku</h2>
-        <form id="searchBook" data-testid="searchBookForm">
+    <section>
+      <h2><span class="section-icon">🔍</span> Cari Buku</h2>
+      <form id="searchBook" data-testid="searchBookForm">
+        <div class="form-group">
           <label for="searchBookTitle">Judul</label>
-          <input id="searchBookTitle" type="text" data-testid="searchBookFormTitleInput" />
-          <button id="searchSubmit" type="submit" data-testid="searchBookFormSubmitButton">
-            Cari
-          </button>
-        </form>
-      </section>
+          <input id="searchBookTitle" type="text" placeholder="Cari berdasarkan judul..."
+            data-testid="searchBookFormTitleInput" />
+        </div>
+        <button id="searchSubmit" type="submit" data-testid="searchBookFormSubmitButton">
+          Cari
+        </button>
+      </form>
+    </section>
 
+    <div class="shelves-grid">
       <section>
-        <h2>Belum selesai dibaca</h2>
-
+        <div class="shelf-header">
+          <h2 class="shelf-title">
+            Belum selesai dibaca
+            <span class="shelf-badge incomplete" id="incompleteBadge">0</span>
+          </h2>
+        </div>
         <div id="incompleteBookList" data-testid="incompleteBookList">
-          <!-- 
-            Ini adalah struktur HTML untuk masing-masing buku.
-            Pastikan susunan elemen beserta atribut data-testid menyesuaikan seperti contoh ini.
-          -->
-          <div data-bookid="123123123" data-testid="bookItem">
-            <h3 data-testid="bookItemTitle">Judul Buku 1</h3>
-            <p data-testid="bookItemAuthor">Penulis: Penulis Buku 1</p>
-            <p data-testid="bookItemYear">Tahun: 2030</p>
-            <div>
-              <button data-testid="bookItemIsCompleteButton">Selesai dibaca</button>
-              <button data-testid="bookItemDeleteButton">Hapus Buku</button>
-              <button data-testid="bookItemEditButton">Edit Buku</button>
-            </div>
+          <div class="empty-state">
+            <p>Belum ada buku di rak ini</p>
           </div>
         </div>
       </section>
 
       <section>
-        <h2>Selesai dibaca</h2>
-
+        <div class="shelf-header">
+          <h2 class="shelf-title">
+            Selesai dibaca
+            <span class="shelf-badge complete" id="completeBadge">0</span>
+          </h2>
+        </div>
         <div id="completeBookList" data-testid="completeBookList">
-          <!-- 
-            Ini adalah struktur HTML untuk masing-masing buku.
-            Pastikan susunan elemen beserta atribut data-testid menyesuaikan seperti contoh ini.
-          -->
-          <div data-bookid="456456456" data-testid="bookItem">
-            <h3 data-testid="bookItemTitle">Judul Buku 2</h3>
-            <p data-testid="bookItemAuthor">Penulis: Penulis Buku 2</p>
-            <p data-testid="bookItemYear">Tahun: 2030</p>
-            <div>
-              <button data-testid="bookItemIsCompleteButton">Selesai dibaca</button>
-              <button data-testid="bookItemDeleteButton">Hapus Buku</button>
-              <button data-testid="bookItemEditButton">Edit Buku</button>
-            </div>
+          <div class="empty-state">
+            <p>Belum ada buku di rak ini</p>
           </div>
         </div>
       </section>
-    </main>
-  </body>
+    </div>
+  </main>
+
+  <div id="editModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="editModalTitle">Edit Buku</h2>
+        <button class="modal-close" id="editModalClose" aria-label="Tutup modal">✕</button>
+      </div>
+      <form id="editForm" class="modal-form">
+        <div class="form-group">
+          <label for="editTitle">Judul Buku</label>
+          <input id="editTitle" type="text" placeholder="Masukkan judul buku..." required />
+        </div>
+        <div class="form-group">
+          <label for="editAuthor">Penulis</label>
+          <input id="editAuthor" type="text" placeholder="Nama penulis..." required />
+        </div>
+        <div class="form-group">
+          <label for="editYear">Tahun Terbit</label>
+          <input id="editYear" type="number" placeholder="Contoh: 2024" min="1000" max="9999" required />
+        </div>
+        <div class="form-group">
+          <label for="editIsComplete">Status Buku</label>
+          <label class="checkbox-wrapper" for="editIsComplete">
+            <input id="editIsComplete" type="checkbox" />
+            <span class="checkbox-label-text">Selesai dibaca</span>
+          </label>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" id="editCancelBtn">Batal</button>
+          <button type="submit" class="btn-save">Simpan Perubahan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="confirmModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal" style="max-width: 380px;">
+      <div class="modal-header">
+        <h2 class="modal-title">Konfirmasi</h2>
+      </div>
+      <p id="confirmMessage" style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem;"></p>
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" id="confirmNo">Batal</button>
+        <button type="button" id="confirmYes"
+          style="background: linear-gradient(135deg, #7f1d1d, #ef4444); color: white; padding: 0.75rem 1.5rem; font-size: 0.9rem; border-radius: var(--radius-sm); box-shadow: 0 4px 12px rgba(239,68,68,0.3);">
+          Ya, Hapus
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+</body>
+
 </html>
