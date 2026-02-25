@@ -64,17 +64,17 @@ function createBookElement(book) {
 
   div.innerHTML = `
     <h3 data-testid="bookItemTitle">${escapeHtml(book.title)}</h3>
-    <p data-testid="bookItemAuthor"><strong>Penulis:</strong> ${escapeHtml(book.author)}</p>
-    <p data-testid="bookItemYear"><strong>Tahun:</strong> ${book.year}</p>
+    <p data-testid="bookItemAuthor">Penulis: ${escapeHtml(book.author)}</p>
+    <p data-testid="bookItemYear">Tahun: ${book.year}</p>
     <div class="book-actions">
       <button data-testid="bookItemIsCompleteButton" class="${toggleClass}">
-        ${toggleIcon} ${toggleLabel}
+        ${toggleLabel}
       </button>
       <button data-testid="bookItemDeleteButton" class="btn-delete">
-        Hapus
+        Hapus Buku
       </button>
       <button data-testid="bookItemEditButton" class="btn-edit">
-        Edit
+        Edit Buku
       </button>
     </div>
   `;
@@ -133,29 +133,21 @@ function renderBooks(filterTitle = '') {
   if (incomplete.length === 0) {
     incompleteList.innerHTML = `
       <div class="empty-state">
-        <div class="empty-icon"></div>
         <p>${query ? 'Tidak ada buku yang cocok' : 'Belum ada buku di rak ini'}</p>
       </div>
     `;
   } else {
-    const grid = document.createElement('div');
-    grid.className = 'book-container';
-    incomplete.forEach((book) => grid.appendChild(createBookElement(book)));
-    incompleteList.appendChild(grid);
+    incomplete.forEach((book) => incompleteList.appendChild(createBookElement(book)));
   }
 
   if (complete.length === 0) {
     completeList.innerHTML = `
       <div class="empty-state">
-        <div class="empty-icon"></div>
         <p>${query ? 'Tidak ada buku yang cocok' : 'Belum ada buku di rak ini'}</p>
       </div>
     `;
   } else {
-    const grid = document.createElement('div');
-    grid.className = 'book-container';
-    complete.forEach((book) => grid.appendChild(createBookElement(book)));
-    completeList.appendChild(grid);
+    complete.forEach((book) => completeList.appendChild(createBookElement(book)));
   }
 }
 
